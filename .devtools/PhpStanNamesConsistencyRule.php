@@ -17,10 +17,10 @@
 
 declare(strict_types=1);
 
-namespace FOP\Console\DevTools;
+namespace MCM\Console\DevTools;
 
-use FOP\Console\Tests\Validator\PhpStanNamesConsistencyService;
-use FOP\Console\Tests\Validator\ValidationResult;
+use MCM\Console\Tests\Validator\PhpStanNamesConsistencyService;
+use MCM\Console\Tests\Validator\ValidationResult;
 use PhpParser;
 use PhpParser\Node;
 use PhpParser\Node\Expr;
@@ -40,7 +40,7 @@ use PHPStan\Rules\RuleErrorBuilder;
  */
 class PhpStanNamesConsistencyRule implements Rule
 {
-    public const FOP_BASE_COMMAND_CLASS_NAME = \FOP\Console\Command::class;
+    public const MCM_BASE_COMMAND_CLASS_NAME = \MCM\Console\Command::class;
 
     /** @var \PhpParser\Node\Stmt\ClassMethod */
     private $node;
@@ -169,7 +169,7 @@ class PhpStanNamesConsistencyRule implements Rule
         }
 
         /* @var $class \PHPStan\Reflection\ClassReflection */
-        return in_array(static::FOP_BASE_COMMAND_CLASS_NAME, $class->getParentClassesNames());
+        return in_array(static::MCM_BASE_COMMAND_CLASS_NAME, $class->getParentClassesNames());
     }
 
 }

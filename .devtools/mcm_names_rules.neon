@@ -1,0 +1,11 @@
+services:
+  -
+    class: MCM\Console\DevTools\PhpStanNamesConsistencyRule
+    tags:
+      - phpstan.rules.rule
+  -
+    class: MCM\Console\Tests\Validator\MCMCommandFormatsValidator
+  -
+    class: MCM\Console\Tests\Validator\PhpStanNamesConsistencyService
+    arguments:
+      yamlServicesFilePath: '%currentWorkingDirectory%/config/services.yml'
