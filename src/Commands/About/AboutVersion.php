@@ -71,10 +71,10 @@ final class AboutVersion extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $fopModule = $this->moduleRepository->getModule('fop_console');
+        $mcmModule = $this->moduleRepository->getModule('module_console_manager');
         $properties = [
-            'registered version' => $fopModule->get('version'),
-            'disk version' => $fopModule->get('version_available'),
+            'registered version' => $mcmModule->get('version'),
+            'disk version' => $mcmModule->get('version_available'),
             'last release' => $this->getLastReleaseVersion(),
         ];
 
