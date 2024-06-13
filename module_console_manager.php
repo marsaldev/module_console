@@ -28,7 +28,7 @@ class ModuleConsoleManager extends Module
     public function __construct()
     {
         $this->name = 'module_console_manager';
-        $this->version = '1.5.0';
+        $this->version = '1.0.0';
         $this->author = 'Marco Salvatore (marsaldev)';
 
         parent::__construct();
