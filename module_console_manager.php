@@ -23,7 +23,7 @@ if (file_exists($autoloadPath)) {
     require_once $autoloadPath;
 }
 
-class ModuleConsoleManager extends Module
+class Module_Console_Manager extends Module
 {
     public function __construct()
     {
