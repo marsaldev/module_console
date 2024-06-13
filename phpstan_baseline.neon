@@ -19,6 +19,6 @@ parameters:
 
 #	This error happens in a stub's test file. It must be ignored in the baseline otherwise the phpstan's unit test will fail.
 		-
-			message: "#^Call to an undefined method FOP\\\\Console\\\\Tests\\\\Resources\\\\Commands\\\\Domain\\\\DomainAction\\:\\:setName\\(\\)\\.$#"
+			message: "#^Call to an undefined method MCM\\\\Console\\\\Tests\\\\Resources\\\\Commands\\\\Domain\\\\DomainAction\\:\\:setName\\(\\)\\.$#"
 			count: 1
 			path: tests/Resources/Commands/Domain/DomainAction.php

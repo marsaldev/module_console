@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) Since 2020 Friends of Presta
+ * Copyleft (c) Since 2024 Marco Salvatore
  *
  * NOTICE OF LICENSE
  *
@@ -8,21 +8,18 @@
  * that is bundled with this package in the file docs/licenses/LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
  * https://opensource.org/licenses/afl-3.0.php
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to infos@friendsofpresta.org so we can send you a copy immediately.
  *
- * @author    Friends of Presta <infos@friendsofpresta.org>
- * @copyright since 2020 Friends of Presta
+ * @author    Marco Salvatore <hi@marcosalvatore.dev>
+ * @copyleft since 2024 Marco Salvatore
  * @license   https://opensource.org/licenses/AFL-3.0  Academic Free License ("AFL") v. 3.0
  *
  */
 
 declare(strict_types=1);
 
-namespace FOP\Console\Commands\Module;
+namespace MCM\Console\Commands\Module;
 
-use FOP\Console\Command;
+use MCM\Console\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -56,8 +53,8 @@ class ModuleNonEssential extends Command
     protected function configure(): void
     {
         $this
-            ->setName('fop:module:non-essential')
-            ->setAliases(['fop:modules:non-essential'])
+            ->setName('mcm:module:non-essential')
+            ->setAliases(['mcm:modules:non-essential'])
             ->setDescription('Manage non-essential modules.')
             ->setHelp('This command Uninstall or Install non-essential modules.')
             ->addArgument(
@@ -100,12 +97,12 @@ class ModuleNonEssential extends Command
 
                 $this->io->table(['ID', 'Name', 'Present?', 'Installed?'], $modulesInfos);
                 $this->io->text('You can'
-                    . PHP_EOL . '    - uninstall all modules by running  : `./bin/console fop:modules:non-essential uninstall`'
-                    . PHP_EOL . '    - uninstall modules by running       : `./bin/console fop:modules:non-essential uninstall --idsmodule x,y,z`'
-                    . PHP_EOL . '    - uninstall one module by running    : `./bin/console fop:modules:non-essential uninstall --modulename ModuleName`'
-                    . PHP_EOL . '    - install all modules by running    : `./bin/console fop:modules:non-essential install`'
-                    . PHP_EOL . '    - install modules by running         : `./bin/console fop:modules:non-essential install --idsmodule x,y,z`'
-                    . PHP_EOL . '    - install one module by running     : `./bin/console fop:modules:non-essential install --modulename ModuleName`');
+                    . PHP_EOL . '    - uninstall all modules by running  : `./bin/console mcm:modules:non-essential uninstall`'
+                    . PHP_EOL . '    - uninstall modules by running       : `./bin/console mcm:modules:non-essential uninstall --idsmodule x,y,z`'
+                    . PHP_EOL . '    - uninstall one module by running    : `./bin/console mcm:modules:non-essential uninstall --modulename ModuleName`'
+                    . PHP_EOL . '    - install all modules by running    : `./bin/console mcm:modules:non-essential install`'
+                    . PHP_EOL . '    - install modules by running         : `./bin/console mcm:modules:non-essential install --idsmodule x,y,z`'
+                    . PHP_EOL . '    - install one module by running     : `./bin/console mcm:modules:non-essential install --modulename ModuleName`');
 
                 return 0;
             case 'uninstall':

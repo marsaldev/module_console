@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) Since 2020 Friends of Presta
+ * Copyleft (c) Since 2024 Marco Salvatore
  *
  * NOTICE OF LICENSE
  *
@@ -8,43 +8,41 @@
  * that is bundled with this package in the file docs/licenses/LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
  * https://opensource.org/licenses/afl-3.0.php
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to infos@friendsofpresta.org so we can send you a copy immediately.
  *
- * @author    Friends of Presta <infos@friendsofpresta.org>
- * @copyright since 2020 Friends of Presta
+ * @author    Marco Salvatore <hi@marcosalvatore.dev>
+ * @copyleft since 2024 Marco Salvatore
  * @license   https://opensource.org/licenses/AFL-3.0  Academic Free License ("AFL") v. 3.0
  *
  */
 
 declare(strict_types=1);
 
-namespace FOP\Console\Tests\Validator;
+namespace MCM\Console\Tests\Validator;
 
-use Exception; /**
- * Class FOPCommandFormatsValidator
+use Exception;
+/**
+ * Class MCMCommandFormatsValidator
  * Rules :
- * - FQCN must follow pattern : FOP\Console\Commands\<Domain>\<Domain><Action>
+ * - FQCN must follow pattern : MCM\Console\Commands\<Domain>\<Domain><Action>
  *   - <Domain> is not empty
  *   - <Action> is not empty
  * - command name (symfony command name) is consistent with <Domain> and <Action>
  * - service name (symfony service declaration) is consistent with <Domain> and <Action>
  */
-class FOPCommandFormatsValidator
+class MCMCommandFormatsValidator
 {
     /**
      * @var string Regular expression for command's fully qualified class name
-     *             `FOP\Console\Commands\Domain\DomainAction`
+     *             `MCM\Console\Commands\Domain\DomainAction`
      */
-    private const FQCN_REGEXP = '#^FOP\\\Console\\\Commands\\\(?<domain>[[:alpha:]]+)\\\(?<action>[[:alpha:]]+)$#X';
+    private const FQCN_REGEXP = '#^MCM\\\Console\\\Commands\\\(?<domain>[[:alpha:]]+)\\\(?<action>[[:alpha:]]+)$#X';
 
     /**
      * @var string regular expression for command's name
-     *             `fop:domain:action`
+     *             `mcm:domain:action`
      *             action and domain can contain '-'
      */
-    private const COMMAND_REGEXP = '#^fop:(?<domain>[[:alpha:]-]+):(?<action>[[:alpha:]-]+)$#X';
+    private const COMMAND_REGEXP = '#^mcm:(?<domain>[[:alpha:]-]+):(?<action>[[:alpha:]-]+)$#X';
 
     /**
      * @var string
@@ -54,10 +52,10 @@ class FOPCommandFormatsValidator
 
     /**
      * @var string regular expression for service's name
-     *             `fop.console.domain.action.command`
+     *             `mcm.console.domain.action.command`
      *             action and domain can contain '_'
      */
-    private const SERVICE_REGEXP = '#^fop\.console\.(?<domain>[[:alpha:]_]+)\.(?<action>[[:alpha:]_]+)\.command$#X';
+    private const SERVICE_REGEXP = '#^mcm\.console\.(?<domain>[[:alpha:]_]+)\.(?<action>[[:alpha:]_]+)\.command$#X';
 
     /**
      * @var string
@@ -70,8 +68,8 @@ class FOPCommandFormatsValidator
 
     /**
      * @param string $fullyQualifiedClassName php class name, e.g. ModuleHooks
-     * @param string $commandName symfony command name, e.g. fop:modules:hooks
-     * @param string $service service name defined in config/services.yml. e.g. fop.console.modules.module_hooks.command
+     * @param string $commandName symfony command name, e.g. mcm:modules:hooks
+     * @param string $service service name defined in config/services.yml. e.g. mcm.console.modules.module_hooks.command
      *
      * @return ValidationResults
      */

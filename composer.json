@@ -1,22 +1,21 @@
 {
-  "name": "friends-of-presta/fop_console",
-  "description": "Add some console commands for PrestaShop 1.7.5+",
+  "name": "marsaldev/module_console_manager",
+  "description": "Add some console commands to manage modules for PrestaShop 1.7.5+",
   "authors": [
     {
-      "name": "Friends of Presta",
-      "email": "infos@friendsofpresta.org",
-      "homepage": "https://friendsofpresta.org/"
+      "name": "Marco Salvatore",
+      "email": "hi@marcosalvatore.dev"
     }
   ],
   "autoload": {
     "psr-4": {
-      "FOP\\Console\\": "src/"
+      "MCM\\Console\\": "src/"
     },
     "classmap": [".devtools/"]
   },
   "autoload-dev": {
     "psr-4": {
-      "FOP\\Console\\Tests\\": "tests/"
+      "MCM\\Console\\Tests\\": "tests/"
     }
   },
   "require": {

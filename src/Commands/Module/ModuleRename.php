@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) Since 2020 Friends of Presta
+ * Copyleft (c) Since 2024 Marco Salvatore
  *
  * NOTICE OF LICENSE
  *
@@ -8,21 +8,18 @@
  * that is bundled with this package in the file docs/licenses/LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
  * https://opensource.org/licenses/afl-3.0.php
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to infos@friendsofpresta.org so we can send you a copy immediately.
  *
- * @author    Friends of Presta <infos@friendsofpresta.org>
- * @copyright since 2020 Friends of Presta
+ * @author    Marco Salvatore <hi@marcosalvatore.dev>
+ * @copyleft since 2024 Marco Salvatore
  * @license   https://opensource.org/licenses/AFL-3.0  Academic Free License ("AFL") v. 3.0
  *
  */
 
-namespace FOP\Console\Commands\Module;
+namespace MCM\Console\Commands\Module;
 
 use Exception;
-use FOP\Console\Command;
-use FOP\Console\Tools\FindAndReplaceTool;
+use MCM\Console\Command;
+use MCM\Console\Tools\FindAndReplaceTool;
 use Module;
 use PrestaShop\PrestaShop\Core\Addon\Module\ModuleManagerBuilder;
 use RuntimeException;
@@ -68,8 +65,8 @@ final class ModuleRename extends Command
     protected function configure(): void
     {
         $this
-            ->setName('fop:module:rename')
-            ->setAliases(['fop:modules:rename'])
+            ->setName('mcm:module:rename')
+            ->setAliases(['mcm:modules:rename'])
             ->setDescription('Rename module')
 
             ->addUsage('[--new-author] <AuthorName>, [-a] <AuthorName>')
@@ -107,8 +104,8 @@ final class ModuleRename extends Command
 
             ->setHelp('This command allows you to replace the name of a module in the files and in the database.'
                 . PHP_EOL . 'Here are some concrete usage examples:'
-                . PHP_EOL . '   • fop:modules:rename PS_,CustomerSignIn KJ,ModuleExample => Rename ps_customersignin module into kjmoduleexample'
-                . PHP_EOL . '   • fop:modules:rename KJ,ModuleExample KJ,ModuleExample2 => Rename kjmoduleexample module into kjmoduleexample2');
+                . PHP_EOL . '   • mcm:modules:rename PS_,CustomerSignIn KJ,ModuleExample => Rename ps_customersignin module into kjmoduleexample'
+                . PHP_EOL . '   • mcm:modules:rename KJ,ModuleExample KJ,ModuleExample2 => Rename kjmoduleexample module into kjmoduleexample2');
     }
 
     /**

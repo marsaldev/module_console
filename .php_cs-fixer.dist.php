@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 $PsConfig = new PrestaShop\CodingStandards\CsFixer\Config();
 
-$fopPsConfig = new class extends PrestaShop\CodingStandards\CsFixer\Config {
+$mcmPsConfig = new class extends PrestaShop\CodingStandards\CsFixer\Config {
     public function getRules(): array
     {
         return parent::getRules() +
@@ -17,7 +17,7 @@ $fopPsConfig = new class extends PrestaShop\CodingStandards\CsFixer\Config {
     }
 };
 
-$fopPsConfig
+$mcmPsConfig
     ->setUsingCache(true)
     ->setCacheFile('.php_cs.cache')
     ->getFinder()
@@ -25,4 +25,4 @@ $fopPsConfig
     ->exclude('vendor')
     ->notPath('tests/Resources');
 
-return $fopPsConfig;
+return $mcmPsConfig;

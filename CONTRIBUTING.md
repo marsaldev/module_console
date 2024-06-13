@@ -1,6 +1,6 @@
 This document is a draft, it's not complete but you can read it before contributing.
 
-Contributionr are welcome !
+Contributions are welcome !
 However, you can't just _throw_ some code and let the others do the job to polish your work.
 
 ## Development installation
@@ -31,11 +31,11 @@ to extend our class.
 // psr-4 autoloader
 
 // if the command is located at src/Commands
-namespace FOP\Console\Commands; 
+namespace MCM\Console\Commands; 
 // or if command is located in a subfolder
-namespace FOP\Console\Commands\Domain; // e.g. namespace FOP\Console\Commands\Configuration
+namespace MCM\Console\Commands\Domain; // e.g. namespace MCM\Console\Commands\Configuration
 
-use FOP\Console\Command;
+use MCM\Console\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -48,9 +48,9 @@ final class MyCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('fop:mycommand') // e.g 'fop:shop-status'
+            ->setName('mcm:mycommand') // e.g 'mcm:shop-status'
             // or
-            ->setName('fop:domain:mycommand') // e.g 'fop:configuration:export' 
+            ->setName('mcm:domain:mycommand') // e.g 'mcm:configuration:export' 
             ->setDescription('Describe the command on a user perspective.');
     }
 
@@ -59,7 +59,7 @@ final class MyCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->io->text('Hello friends of PrestaShop!');
+        $this->io->text('Hello Module Console Manager!!');
 
         return 0; // return 0 on success or 1 on failure.        
     }

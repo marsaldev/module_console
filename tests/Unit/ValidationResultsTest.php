@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) Since 2020 Friends of Presta
+ * Copyleft (c) Since 2024 Marco Salvatore
  *
  * NOTICE OF LICENSE
  *
@@ -8,26 +8,23 @@
  * that is bundled with this package in the file docs/licenses/LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
  * https://opensource.org/licenses/afl-3.0.php
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to infos@friendsofpresta.org so we can send you a copy immediately.
  *
- * @author    Friends of Presta <infos@friendsofpresta.org>
- * @copyright since 2020 Friends of Presta
+ * @author    Marco Salvatore <hi@marcosalvatore.dev>
+ * @copyleft since 2024 Marco Salvatore
  * @license   https://opensource.org/licenses/AFL-3.0  Academic Free License ("AFL") v. 3.0
  *
  */
 
-namespace FOP\Console\Tests\Unit;
+namespace MCM\Console\Tests\Unit;
 
-use FOP\Console\Tests\Validator\Exception\CantValidateEmptyValidationResults;
-use FOP\Console\Tests\Validator\ValidationResult;
-use FOP\Console\Tests\Validator\ValidationResults;
+use MCM\Console\Tests\Validator\Exception\CantValidateEmptyValidationResults;
+use MCM\Console\Tests\Validator\ValidationResult;
+use MCM\Console\Tests\Validator\ValidationResults;
 use PHPUnit\Framework\TestCase;
 
 class ValidationResultsTest extends TestCase
 {
-    /** @var \FOP\Console\Tests\Validator\ValidationResults */
+    /** @var \MCM\Console\Tests\Validator\ValidationResults */
     private $validationResults;
 
     protected function setUp()

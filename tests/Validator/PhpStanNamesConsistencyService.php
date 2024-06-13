@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) Since 2020 Friends of Presta
+ * Copyleft (c) Since 2024 Marco Salvatore
  *
  * NOTICE OF LICENSE
  *
@@ -8,19 +8,16 @@
  * that is bundled with this package in the file docs/licenses/LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
  * https://opensource.org/licenses/afl-3.0.php
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to infos@friendsofpresta.org so we can send you a copy immediately.
  *
- * @author    Friends of Presta <infos@friendsofpresta.org>
- * @copyright since 2020 Friends of Presta
+ * @author    Marco Salvatore <hi@marcosalvatore.dev>
+ * @copyleft since 2024 Marco Salvatore
  * @license   https://opensource.org/licenses/AFL-3.0  Academic Free License ("AFL") v. 3.0
  *
  */
 
 declare(strict_types=1);
 
-namespace FOP\Console\Tests\Validator;
+namespace MCM\Console\Tests\Validator;
 
 use Exception;
 use RuntimeException;
@@ -31,13 +28,13 @@ class PhpStanNamesConsistencyService
     /** @var string */
     private $yamlServicesFilePath;
 
-    /** @var \FOP\Console\Tests\Validator\FOPCommandFormatsValidator */
+    /** @var \MCM\Console\Tests\Validator\MCMCommandFormatsValidator */
     private $validator;
 
     /** @var ?array<string, string> */
     private $servicesNamesCache;
 
-    public function __construct(string $yamlServicesFilePath, FOPCommandFormatsValidator $validator)
+    public function __construct(string $yamlServicesFilePath, MCMCommandFormatsValidator $validator)
     {
         $this->yamlServicesFilePath = $yamlServicesFilePath;
         $this->validator = $validator;
@@ -61,7 +58,7 @@ class PhpStanNamesConsistencyService
         $services = $this->getServicesNames();
         if (!isset($services[$fullyQualifiedClassName])) {
 //            dump($fullyQualifiedClassName, $services);
-            throw new Exception('Service not found in service.yaml.' . PHP_EOL . 'Maybe unsupported syntax.' . PHP_EOL . 'Use this form :' . PHP_EOL . '' . PHP_EOL . ' fop.console.domain.action.command:' . PHP_EOL . '   class: FOP\\Console\\Commands\\Domain\\DomainAction' . PHP_EOL . '   tags: [ console.command ]');
+            throw new Exception('Service not found in service.yaml.' . PHP_EOL . 'Maybe unsupported syntax.' . PHP_EOL . 'Use this form :' . PHP_EOL . '' . PHP_EOL . ' mcm.console.domain.action.command:' . PHP_EOL . '   class: FOP\\Console\\Commands\\Domain\\DomainAction' . PHP_EOL . '   tags: [ console.command ]');
         }
 
         return $services[$fullyQualifiedClassName] ?? '';
@@ -73,8 +70,8 @@ class PhpStanNamesConsistencyService
      * @todo the direct form of commands declaration are found, not the long form
      * Recognized :
      * ```yaml
-     *   fop.console.module.non_essential.command:
-     *     class: FOP\Console\Commands\Module\ModuleNonEssential
+     *   mcm.console.module.non_essential.command:
+     *     class: MCM\Console\Commands\Module\ModuleNonEssential
      *     tags: [ console.command ]
      *```
      * Not recognized :

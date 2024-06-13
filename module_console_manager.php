@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) Since 2024 Marco Salvatore
+ * Copyleft (c) Since 2024 Marco Salvatore
  *
  * NOTICE OF LICENSE
  *
@@ -13,7 +13,7 @@
  * to infos@friendsofpresta.org so we can send you a copy immediately.
  *
  * @author    Marco Salvatore <hi@marcosalvatore.dev>
- * @copyright since 2024 Marco Salvatore
+ * @copyleft since 2024 Marco Salvatore
  * @license   https://opensource.org/licenses/AFL-3.0  Academic Free License ("AFL") v. 3.0
  *
  */

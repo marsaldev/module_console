@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) Since 2020 Friends of Presta
+ * Copyleft (c) Since 2024 Marco Salvatore
  *
  * NOTICE OF LICENSE
  *
@@ -8,22 +8,19 @@
  * that is bundled with this package in the file docs/licenses/LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
  * https://opensource.org/licenses/afl-3.0.php
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to infos@friendsofpresta.org so we can send you a copy immediately.
  *
- * @author    Friends of Presta <infos@friendsofpresta.org>
- * @copyright since 2020 Friends of Presta
+ * @author    Marco Salvatore <hi@marcosalvatore.dev>
+ * @copyleft since 2024 Marco Salvatore
  * @license   https://opensource.org/licenses/AFL-3.0  Academic Free License ("AFL") v. 3.0
  *
  */
 
-namespace FOP\Console\Tests\Unit;
+namespace MCM\Console\Tests\Unit;
 
-use FOP\Console\DevTools\PhpStanNamesConsistencyRule;
-use FOP\Console\Tests\Validator\PhpStanNamesConsistencyService;
-use FOP\Console\Tests\Validator\ValidationResult;
-use FOP\Console\Tests\Validator\ValidationResults;
+use MCM\Console\DevTools\PhpStanNamesConsistencyRule;
+use MCM\Console\Tests\Validator\PhpStanNamesConsistencyService;
+use MCM\Console\Tests\Validator\ValidationResult;
+use MCM\Console\Tests\Validator\ValidationResults;
 use PHPStan\Testing\RuleTestCase;
 
 class PhpStanNamesConsistencyRuleTest extends RuleTestCase
@@ -51,10 +48,10 @@ class PhpStanNamesConsistencyRuleTest extends RuleTestCase
 
         // we can't use the original class, so we use an extended class.
         // this is because PhpStanNamesConsistencyRule::nodeIsInClassFopCommand() checks the FQDN and therefore it needs to be changed
-        // with the namespace of the tested class (FOP\Console\Tests\Resources\Commands\Domain).
+        // with the namespace of the tested class (MCM\Console\Tests\Resources\Commands\Domain).
         /* @phpstan-ignore-next-line */
         return new class($mockedValidatorService) extends PhpStanNamesConsistencyRule {
-            public const FOP_BASE_COMMAND_CLASS_NAME = 'FOP\Console\Tests\Resources\Commands\Command';
+            public const MCM_BASE_COMMAND_CLASS_NAME = 'MCM\Console\Tests\Resources\Commands\Command';
         };
     }
 
