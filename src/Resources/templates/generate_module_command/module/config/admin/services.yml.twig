@@ -1,0 +1,28 @@
+services:
+  _defaults:
+    public: true
+
+  {{ module_author|lower }}.module.{{ module_name|lower }}.form.type.configuration:
+    class: '{{ name_space }}\Type\{{ class_name }}FormType'
+    parent: 'form.type.translatable.aware'
+    public: true
+    tags:
+      - { name: form.type }
+
+  {{ module_author|lower }}.module.{{ module_name|lower }}.form.configuration_data_configuration:
+    class: {{ name_space }}\Form\ConfigurationDataConfiguration
+    arguments: [ '@prestashop.adapter.legacy.configuration' ]
+
+  {{ module_author|lower }}.module.{{ module_name|lower }}.form.configuration_form_data_provider:
+    class: {{ name_space }}\Form\ConfigurationFormDataProvider
+    arguments:
+      - '@{{ module_author|lower }}.module.{{ module_name|lower }}.form.configuration_data_configuration'
+
+  {{ module_author|lower }}.module.{{ module_name|lower }}.form.configuration_form_data_handler:
+    class: 'PrestaShop\PrestaShop\Core\Form\Handler'
+    arguments:
+      - '@form.factory'
+      - '@prestashop.core.hook.dispatcher'
+      - '@{{ module_author|lower }}.module.{{ module_name|lower }}.form.configuration_form_data_provider'
+      - '{{ name_space }}\Type\{{ class_name }}FormType'
+      - '{{ module_name|lower }}ConfigurationForm'

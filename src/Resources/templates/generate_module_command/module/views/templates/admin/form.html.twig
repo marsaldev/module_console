@@ -1,0 +1,28 @@
+{% verbatim %}{% extends '@PrestaShop/Admin/layout.html.twig' %}{% endverbatim %}
+{% verbatim %}{#TODO: Edit#}{% endverbatim %}
+{% verbatim %}{% set layoutTitle = '{% endverbatim %}{{ moduleName|capitalize }}{% verbatim %} Configuration'|trans({}, 'Modules.{% endverbatim %}{{ moduleName|capitalize }}{% verbatim %}.Admin') %}{% endverbatim %}
+
+{% verbatim %}{% block content %}{% endverbatim %}
+    {% verbatim %}{{ form_start(configurationForm) }}{% endverbatim %}
+<div class="card">
+  <h3 class="card-header">
+    <i class="material-icons">settings</i> {% verbatim %}{# TODO: Edit #}{{ 'Configuration form'|trans({}, 'Modules.{% endverbatim %}{{ moduleName|capitalize }}{% verbatim %}.Admin') }}{% endverbatim %}
+  </h3>
+  <div class="card-body">
+    <div class="form-wrapper">
+      {% verbatim %}{{ form_widget(configurationForm) }}{% endverbatim %}
+    </div>
+  </div>
+  <div class="card-footer">
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-primary float-right" id="save-button">
+        {% verbatim %}{{ 'Save'|trans({}, 'Admin.Actions') }}{% endverbatim %}
+      </button>
+    </div>
+  </div>
+</div>
+<div style="display: none">
+  {% verbatim %}{{ form_rest(configurationForm) }}{% endverbatim %}
+</div>
+{% verbatim %}{{ form_end(configurationForm) }}{% endverbatim %}
+{% verbatim %}{% endblock %}{% endverbatim %}

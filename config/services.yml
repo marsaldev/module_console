@@ -1,46 +1,51 @@
 services:
-  _defaults:
-    public: true
+    _defaults:
+        public: true
 
-  mcm.console.console_loader:
-    class: MCM\Console\Context\ConsoleLoader
-    arguments:
-      - "@prestashop.adapter.legacy.context"
-      - "@prestashop.adapter.shop.context"
-      - "%kernel.root_dir%"
+    mcm.console.console_loader:
+        class: MCM\Console\Context\ConsoleLoader
+        arguments:
+            - "@prestashop.adapter.legacy.context"
+            - "@prestashop.adapter.shop.context"
+            - "%kernel.root_dir%"
 
-  mcm.console.hook.add.command:
-    class: MCM\Console\Commands\Hook\HookAdd
-    tags: [ console.command ]
+    mcm.console.hook.add.command:
+        class: MCM\Console\Commands\Hook\HookAdd
+        tags: [ console.command ]
 
-  mcm.console.module.unhook.command:
-    class: MCM\Console\Commands\Module\ModuleUnhook
-    tags: [ console.command ]
+    mcm.console.module.unhook.command:
+        class: MCM\Console\Commands\Module\ModuleUnhook
+        tags: [ console.command ]
 
-  mcm.console.module.hook.command:
-    class: MCM\Console\Commands\Module\ModuleHook
-    tags: [ console.command ]
+    mcm.console.module.hook.command:
+        class: MCM\Console\Commands\Module\ModuleHook
+        tags: [ console.command ]
 
-  mcm.console.module.hooks.command:
-    class: MCM\Console\Commands\Module\ModuleHooks
-    tags: [ console.command ]
+    mcm.console.module.hooks.command:
+        class: MCM\Console\Commands\Module\ModuleHooks
+        tags: [ console.command ]
 
-  mcm.console.module.rename.command:
-    class: MCM\Console\Commands\Module\ModuleRename
-    tags: [ console.command ]
+    mcm.console.module.rename.command:
+        class: MCM\Console\Commands\Module\ModuleRename
+        tags: [ console.command ]
 
-  mcm.console.module.non_essential.command:
-    class: MCM\Console\Commands\Module\ModuleNonEssential
-    tags: [ console.command ]
+    mcm.console.module.non_essential.command:
+        class: MCM\Console\Commands\Module\ModuleNonEssential
+        tags: [ console.command ]
 
-  mcm.console.module.generate.command:
-    class: MCM\Console\Commands\Module\ModuleGenerate
-    tags: [ console.command ]
+    mcm.console.module.generate.command:
+        class: MCM\Console\Commands\Module\ModuleGenerate
+        tags: [ console.command ]
 
-  mcm.console.about.version.command:
-    class: MCM\Console\Commands\About\AboutVersion
-    tags: [ console.command ]
+    mcm.console.about.version.command:
+        class: MCM\Console\Commands\About\AboutVersion
+        tags: [ console.command ]
 
+    mcm.console.module.generate.debug.command:
+        class: MCM\Console\Commands\Module\ModuleGenerateDebugCommand
+        parent: mcm.console.module.generate.command
+        public: true
+        tags: [ console.command ]
 
 imports:
-  - { resource: overriders.yml }
+    - { resource: overriders.yml }

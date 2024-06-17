@@ -5,47 +5,33 @@
 
 namespace {{ name_space }}\Controller;
 
-use {{ name_space }}\Form\Type\ConfigurationType;
-use Configuration;
 use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
 use Symfony\Component\HttpFoundation\Request;
 
-class {{ class_name }} extends FrameworkBundleAdminController
+class {{ class_name|capitalize }}Controller extends FrameworkBundleAdminController
 {
-	public function configuration(Request $request)
-	{
-        $conf = [
-            'CONFNAME',
-        ];
-        $data = [];
-        foreach ($conf as $key) {
-            $data[$key] = Configuration::get(
-                $key,
-                $this->getContext()->shop->id_shop_group,
-                $this->getContext()->shop->id
-            );
-        }
-        $form = $this->createForm(ConfigurationType::class, $data);
-        $form->handleRequest($request);
+    public function index(Request $request)
+    {
+        $configurationFormDataHandler = $this->get('{{ clean_module_author|lower }}.module.{{ module_name|lower }}.form.configuration_form_data_handler');
 
-        if ($form->isSubmitted() && $form->isValid()) {
-        $data = $form->getData();
-            foreach ($data as $conf_name => $conf_value) {
-                Configuration::updateValue(
-                    $conf_name,
-                    $conf_value,
-                    $this->getContext()->shop->id_shop_group,
-                    $this->getContext()->shop->id
-                );
+        $configurationForm = $configurationFormDataHandler->getForm();
+        $configurationForm->handleRequest($request);
+
+        if ($configurationForm->isSubmitted() && $configurationForm->isValid()) {
+            /** You can return array of errors in form handler and they can be displayed to user with flashErrors */
+            $errors = $configurationFormDataHandler->save($configurationForm->getData());
+
+            if (empty($errors)) {
+                $this->addFlash('success', $this->trans('Successful update.', 'Admin.Notifications.Success'));
+
+                return $this->redirectToRoute('admin_{{ module_name|lower }}_configuration_index');
             }
-        $this->addFlash('success', 'Configuration saved');
-        }
-        return $this->render(
-            '@Modules/{{ module_name }}/views/templates/admin/controller/admin_configuration.html.twig',
-            array(
-                'form' => $form->createView(),
-                )
-            );
 
-	}
+            $this->flashErrors($errors);
+        }
+
+        return $this->render('@Modules/{{ module_name }}/views/templates/admin/form.html.twig', [
+            'configurationForm' => $configurationForm->createView()
+        ]);
+    }
 }

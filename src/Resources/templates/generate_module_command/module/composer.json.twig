@@ -1,33 +1,33 @@
 {
-    "name": "{{ module_name }}/{{ module_name }}",
-    "description": "<edit>",
-    "homepage": "<edit>",
-    "license": "<edit>",
-    "type": "prestashop-module",
-    "authors": [
-        {
-            "name": "<edit>",
-            "email": "<edit>"
-        }
-    ],
-    "minimum-stability": "stable",
-    "config": {
-        "preferred-install": "dist",
-        "prepend-autoloader": false
-    },
-    "autoload": {
-        "psr-4": {
-            "{{ name_space_psr4 }}\\": "src/"
-        },
-        "config": {
-            "prepend-autoloader": false
-        }
+  "name": "{{ module_author|lower }}/{{ module_name }}",
+  {% if description %}"description": "{{ description }}",{% endif %}
+  {% if website %}"homepage": "{{ website }}",{% endif %}
+  {% if license %}"license": "{{ licence }}",{% endif %}
+  "type": "prestashop-module",
+  "authors": [
+    {
+      "name": "{{ module_author }}"
+      {% if email %},"email": "{{ email }}"{% endif %}
     }
-    {% if test == true %},
-    "require-dev": {
-        "mockery/mockery": "^1.4@dev",
-        "phpunit/phpunit": "~8.5.16",
-        "symfony/phpunit-bridge": "^3.4"
-    },
-    {% endif %}
+  ],
+  "autoload": {
+    "psr-4": {
+      "{{ name_space_psr4 }}\\": "src/"
+    }
+  },
+  "minimum-stability": "stable",
+  "require": {
+    "php": ">=7.1.0"
+  },
+  "config": {
+    "preferred-install": "dist",
+    "prepend-autoloader": false
+  }
+  {% if test == true %},
+  "require-dev": {
+    "mockery/mockery": "^1.4@dev",
+    "phpunit/phpunit": "~8.5.16",
+    "symfony/phpunit-bridge": "^3.4"
+  },
+  {% endif %}
 }

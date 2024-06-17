@@ -28,6 +28,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 abstract class Command extends ContainerAwareCommand
 {
+    public const SUCCESS = 0;
+    public const FAILURE = 1;
+    public const INVALID = 2;
+
     /** @var \Symfony\Component\Console\Style\SymfonyStyle */
     protected $io;
 

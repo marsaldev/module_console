@@ -1,0 +1,7 @@
+admin_{{ module_name|lower }}_configuration_index:
+  path: '/{{ module_name|lower}}/configuration'
+  methods: [GET,POST]
+  defaults:
+    _controller: '{{ name_space }}\Controller\ConfigurationController::index'
+    _legacy_controller: Admin{{ module_name|capitalize }}ConfigurationForm
+    _legacy_link: Admin{{ module_name|capitalize }}ConfigurationForm

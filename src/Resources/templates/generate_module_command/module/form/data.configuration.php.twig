@@ -1,0 +1,52 @@
+<?php
+
+namespace {{ name_space }}\Form;
+
+use PrestaShop\PrestaShop\Core\Configuration\DataConfigurationInterface;
+use PrestaShop\PrestaShop\Core\ConfigurationInterface;
+
+class {{ class_name }}DataConfiguration implements DataConfigurationInterface
+{
+
+    public const {{ module_name|upper }}_FORM_TEXT_TYPE = '{{ module_name|upper }}_FORM_TEXT_TYPE';
+
+    /** @var ConfigurationInterface  */
+    private $configuration;
+
+    public function __construct(ConfigurationInterface $configuration)
+    {
+        $this->configuration = $configuration;
+    }
+
+    public function getConfiguration()
+    {
+        $return = [];
+
+        $return['{{ module_name|lower }}_configuration_text'] = $this->configuration->get(static::{{ module_name|upper }}_FORM_TEXT_TYPE);
+
+        return $return;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function updateConfiguration(array $configuration)
+    {
+        $errors = [];
+
+        if ($this->validateConfiguration($configuration)) {
+            $this->configuration->set(static::{{ module_name|upper }}_FORM_TEXT_TYPE, $configuration['{{ module_name|lower }}_configuration_text']);
+        }
+
+        /* Errors are returned here. */
+        return $errors;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function validateConfiguration(array $configuration): bool
+    {
+        return isset($configuration['{{ module_name|lower }}_configuration_text']);
+    }
+}

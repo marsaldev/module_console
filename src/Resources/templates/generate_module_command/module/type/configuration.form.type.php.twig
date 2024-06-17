@@ -1,0 +1,21 @@
+<?php
+/**
+ * <your license here>
+ */
+
+namespace {{ name_space }}\Type;
+
+use PrestaShopBundle\Form\Admin\Type\TranslatorAwareType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
+
+class {{ class_name }}FormType extends TranslatorAwareType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+            ->add('{{ module_name|lower }}_configuration_text', TextType::class, [
+                'label' => $this->trans('Configuration text', 'Modules.{{ module_name|capitalize }}.Admin'),
+        ]);
+    }
+}
