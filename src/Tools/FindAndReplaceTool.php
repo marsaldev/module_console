@@ -85,7 +85,7 @@ class FindAndReplaceTool
     public function getUsualCasesFormats()
     {
         $caseFormats = [
-            //string_to_format
+            // string_to_format
             'snakeCase' => function ($words) {
                 return strtolower(
                     implode(
@@ -94,11 +94,11 @@ class FindAndReplaceTool
                     )
                 );
             },
-            //stringtoformat
+            // stringtoformat
             'lowerCase' => function ($words) {
                 return strtolower(implode($words));
             },
-            //string-to-format
+            // string-to-format
             'kebabCase' => function ($words) {
                 return strtolower(
                     implode(
@@ -107,15 +107,15 @@ class FindAndReplaceTool
                     )
                 );
             },
-            //STRINGTOFORMAT
+            // STRINGTOFORMAT
             'upperCase' => function ($words) {
                 return strtoupper(implode($words));
             },
-            //Stringtoformat
+            // Stringtoformat
             'firstUpperCased' => function ($words) {
                 return ucfirst(strtolower(implode($words)));
             },
-            //String To Format
+            // String To Format
             'pascalCaseSpaced' => function ($words) {
                 return implode(
                     ' ',
@@ -125,7 +125,7 @@ class FindAndReplaceTool
                     )
                 );
             },
-            //String to format
+            // String to format
             'firstUpperCasedSpaced' => function ($words) {
                 return ucfirst(
                     implode(
@@ -137,14 +137,14 @@ class FindAndReplaceTool
                     )
                 );
             },
-            //String to Format
+            // String to Format
             'spaced' => function ($words) {
                 return implode(
                     ' ',
                     $this->sanitizeWords($words)
                 );
             },
-            //stringToFormat
+            // stringToFormat
             'camelCase' => function ($words) {
                 return lcfirst(
                     implode(
@@ -155,11 +155,11 @@ class FindAndReplaceTool
                     )
                 );
             },
-            //StringToFormat
+            // StringToFormat
             'pascalCase' => function ($words) {
                 return implode(array_map('ucfirst', $words));
             },
-            //STRING_TO_FORMAT
+            // STRING_TO_FORMAT
             'upperCaseSnakeCase' => function ($words) {
                 return strtoupper(
                     implode(
@@ -276,18 +276,19 @@ class FindAndReplaceTool
 
         $fileReplacePairs = [];
 
-        // Define the function if it doesn't already exist (for PHP < 8.0)
-        if (!function_exists('str_contains')) {
-            function str_contains($haystack, $needle) {
-                return $needle !== '' && strpos($haystack, $needle) !== false;
-            }
-        }
-
         foreach ($replacePairs as $search => $replace) {
-            if (str_contains($filePath, $search)
-                || ($file->isFile() && str_contains($fileContent, $search))
-            ) {
-                $fileReplacePairs[$search] = $replace;
+            if (!function_exists('str_contains')) {
+                if (str_contains($filePath, $search)
+                    || ($file->isFile() && str_contains($fileContent, $search))
+                ) {
+                    $fileReplacePairs[$search] = $replace;
+                }
+            } else {
+                if ($this->str_contains($filePath, $search)
+                    || ($file->isFile() && $this->str_contains($fileContent, $search))
+                ) {
+                    $fileReplacePairs[$search] = $replace;
+                }
             }
         }
 
@@ -314,5 +315,11 @@ class FindAndReplaceTool
             ->in($paths);
 
         return $finder;
+    }
+
+    // Use class method if the function doesn't already exist (for PHP < 8.0)
+    protected function str_contains($haystack, $needle)
+    {
+        return $needle !== '' && strpos($haystack, $needle) !== false;
     }
 }

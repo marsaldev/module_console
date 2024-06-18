@@ -20,8 +20,8 @@ declare(strict_types=1);
 namespace MCM\Console\Commands\About;
 
 use Exception;
-use MCM\Console\Command;
 use GuzzleHttp\Client;
+use MCM\Console\Command;
 use RuntimeException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

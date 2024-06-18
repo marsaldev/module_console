@@ -19,13 +19,13 @@ namespace MCM\Console\Commands\Module;
 
 use MCM\Console\Command;
 use MCM\Console\Tools\FindAndReplaceTool;
+use PrestaShopBundle\Translation\Translator;
 use Symfony\Component\Console\Helper\FormatterHelper;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Console\Helper\ProgressBar;
-use PrestaShopBundle\Translation\Translator;
 
 class ModuleGenerate extends Command
 {
@@ -136,7 +136,7 @@ class ModuleGenerate extends Command
             $this->email = $helper->ask($input, $output, $ask_author_email);
 
             if ($helper->ask($input, $output, $ask_author_website_insertion) === 'yes') {
-                $this->website = "https://" . $helper->ask($input, $output, $ask_author_website);
+                $this->website = 'https://' . $helper->ask($input, $output, $ask_author_website);
             }
             if ($helper->ask($input, $output, $ask_module_description_yes) === 'yes') {
                 $this->description = $helper->ask($input, $output, $ask_module_description);
@@ -167,11 +167,11 @@ class ModuleGenerate extends Command
         if ($this->isNewModule === true) {
             $progressBarUnits = 9;
             if ($this->testGeneration === true) {
-                $progressBarUnits++;
+                ++$progressBarUnits;
             }
             // creates a new progress bar
             $this->creationProgressBar = new ProgressBar($output, $progressBarUnits);
-            $this->creationProgressBar->setFormat("%message% %current%/%max% [%bar%] %percent:3s%%");
+            $this->creationProgressBar->setFormat('%message% %current%/%max% [%bar%] %percent:3s%%');
 
             $this->output->writeln('');
 
@@ -205,7 +205,7 @@ class ModuleGenerate extends Command
             );
             $this->creationProgressBar->advance();
 
-            //$output->writeln(' ');
+            // $output->writeln(' ');
             $this->creationProgressBar->setMessage('<info>Creating routes.yml</info>');
             $this->createRoute(
                 $this->moduleName,
@@ -237,7 +237,7 @@ class ModuleGenerate extends Command
 
             $this->creationProgressBar->setMessage('<info>Creating configuration controller template...</info>');
             $this->createControllerTemplate($this->moduleName);
-            $this->testGeneration? $this->creationProgressBar->advance() : $this->creationProgressBar->finish();
+            $this->testGeneration ? $this->creationProgressBar->advance() : $this->creationProgressBar->finish();
 
             if ($this->testGeneration === true) {
                 $this->creationProgressBar->setMessage('<info>create test folder</info>');
@@ -250,7 +250,6 @@ class ModuleGenerate extends Command
             $output->writeln('<info>DONE!</info>');
             $output->writeln('<comment>Remember to check (and edit if necessary) the composer.json and run "composer install" inside your new module before install it in PrestaShop.</comment>');
             $output->writeln('');
-
         } else {
             $progressBarUnits = 0;
             if ($this->frontControllerName === true) {
@@ -335,7 +334,7 @@ class ModuleGenerate extends Command
             'module_name' => $this->findAndReplaceTool->sanitizeWords($moduleName),
             'module_author' => $this->findAndReplaceTool->sanitizeWords($moduleAuthor),
             'class_name' => $className,
-            'name_space' => $nameSpace
+            'name_space' => $nameSpace,
         ]);
         $module_config_path =
             $this->getModuleDirectory($moduleName) . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'admin';
@@ -416,7 +415,7 @@ class ModuleGenerate extends Command
         $configurationFormDataProvider =
             $this->twig->render($this->baseFormFolder . DIRECTORY_SEPARATOR . 'form.data.provider.php.twig', [
                 'name_space' => $moduleNamespace,
-                'class_name' => 'Configuration'
+                'class_name' => 'Configuration',
             ]);
 
         $this->filesystem->dumpFile(
@@ -451,7 +450,8 @@ class ModuleGenerate extends Command
         $this->filesystem->mkdir($module_view_path);
 
         $controllerView = $this->twig->render(
-            $this->baseTemplatesFolder . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'form.html.twig', [
+            $this->baseTemplatesFolder . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'form.html.twig',
+            [
                 'moduleName' => $modulename,
             ]
         );
@@ -535,11 +535,13 @@ class ModuleGenerate extends Command
 
     /**
      * @param mixed $moduleAuthor
+     *
      * @return ModuleGenerate
      */
     public function setModuleAuthor($moduleAuthor)
     {
         $this->moduleAuthor = $moduleAuthor;
+
         return $this;
     }
 
@@ -559,6 +561,7 @@ class ModuleGenerate extends Command
     public function setDescription($description)
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -570,6 +573,7 @@ class ModuleGenerate extends Command
     public function setWebsite($website)
     {
         $this->website = $website;
+
         return $this;
     }
 
@@ -581,6 +585,7 @@ class ModuleGenerate extends Command
     public function setLicense($license)
     {
         $this->license = $license;
+
         return $this;
     }
 
@@ -592,12 +597,14 @@ class ModuleGenerate extends Command
     public function setEmail($email)
     {
         $this->email = $email;
+
         return $this;
     }
 
     public function setBaseAdminConfigFolder(string $baseAdminConfigFolder): ModuleGenerate
     {
         $this->baseAdminConfigFolder = $baseAdminConfigFolder;
+
         return $this;
     }
 
@@ -609,12 +616,14 @@ class ModuleGenerate extends Command
     public function setBaseFormFolder(string $baseFormFolder): ModuleGenerate
     {
         $this->baseFormFolder = $baseFormFolder;
+
         return $this;
     }
 
     public function setBaseTypeFolder(string $baseTypeFolder): ModuleGenerate
     {
         $this->baseTypeFolder = $baseTypeFolder;
+
         return $this;
     }
 
