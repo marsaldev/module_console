@@ -20,12 +20,14 @@ declare(strict_types=1);
 namespace MCM\Console\Tests\Validator;
 
 use Exception;
+
 /**
  * Class MCMCommandFormatsValidator
  * Rules :
- * - FQCN must follow pattern : MCM\Console\Commands\<Domain>\<Domain><Action>
+ * - FQCN must follow pattern : MCM\Console\Commands\<Domain>\<Domain><Action>[<Subaction>]Command
  *   - <Domain> is not empty
  *   - <Action> is not empty
+ *   - <Subaction> can be empty
  * - command name (symfony command name) is consistent with <Domain> and <Action>
  * - service name (symfony service declaration) is consistent with <Domain> and <Action>
  */
@@ -33,16 +35,17 @@ class MCMCommandFormatsValidator
 {
     /**
      * @var string Regular expression for command's fully qualified class name
-     *             `MCM\Console\Commands\Domain\DomainAction`
+     *             `MCM\Console\Commands\Domain\DomainAction[SubAction]Command`
      */
     private const FQCN_REGEXP = '#^MCM\\\Console\\\Commands\\\(?<domain>[[:alpha:]]+)\\\(?<action>[[:alpha:]]+)$#X';
+//    private const FQCN_REGEXP = '#^MCM\\\Console\\\Commands\\\(?<domain>[[:alpha:]]+)\\\(?<action>[[:alpha:]]+)(?:\\\(?<subaction>[[:alpha:]]*))?$#X';
 
     /**
      * @var string regular expression for command's name
-     *             `mcm:domain:action`
-     *             action and domain can contain '-'
+     *             `mcm:domain:action` or `mcm:domain:action:subaction`
+     *             action/subaction and domain can contain '-'
      */
-    private const COMMAND_REGEXP = '#^mcm:(?<domain>[[:alpha:]-]+):(?<action>[[:alpha:]-]+)$#X';
+    private const COMMAND_REGEXP = '#^mcm:(?<domain>[[:alpha:]-]+):(?<action>[[:alpha:]-]+)(?::(?<subaction>[[:alpha:]-]+))?$#X';
 
     /**
      * @var string
@@ -79,6 +82,7 @@ class MCMCommandFormatsValidator
         string $service
     ): ValidationResults {
         $this->results = new ValidationResults();
+        $fullyQualifiedClassName = preg_replace('/Command$/', '', $fullyQualifiedClassName);
 
         $this->checkDomainIsNotEmptyInClassName($fullyQualifiedClassName);
         $this->checkActionIsNotEmptyInClassName($fullyQualifiedClassName);
@@ -138,20 +142,32 @@ class MCMCommandFormatsValidator
         string $commandName,
         string $fullyQualifiedClassName
     ): void {
-        list($domainWords, $actionWords) = $this->extractDomainAndActionsFromRegexp(self::COMMAND_REGEXP, self::COMMAND_SPLIT_WORDS_REGEXP, $commandName);
+        list($domainWords, $actionWords, $subActionWords) = $this->extractDomainAndActionsAndSubActionsFromRegexp(self::COMMAND_REGEXP, self::COMMAND_SPLIT_WORDS_REGEXP, $commandName);
         $actionWordsFromFQCN = $this->getWordsFromCamelCasedString($this->extractActionWithoutDomainFromFQCN($fullyQualifiedClassName));
+        // $subActionWordsFromFQCN = $this->getWordsFromCamelCasedString($this->extractSubactionWithoutDomainFromFQCN($fullyQualifiedClassName));
         $domainWordsFromFQCN = $this->getWordsFromCamelCasedString($this->extractDomainFromFQCN($fullyQualifiedClassName));
 
         if ($domainWords != $domainWordsFromFQCN || $actionWords != $actionWordsFromFQCN) {
             $this->results->addResult(
                 new ValidationResult(
                     false,
-                    "Wrong command name '$commandName'"
+                    "Wrong command name '$commandName'. Fix domain or action pattern"
                 )
             );
 
             return;
         }
+
+        /*if ($subActionWords && $subActionWords != $subActionWordsFromFQCN) {
+            $this->results->addResult(
+                new ValidationResult(
+                    false,
+                    "Wrong command name '$commandName'. Fix subaction pattern"
+                )
+            );
+
+            return;
+        }*/
         $this->results->addResult(new ValidationResult(true, 'Symfony command name is consistent with FQCN.'));
     }
 
@@ -170,7 +186,7 @@ class MCMCommandFormatsValidator
         string $service,
         string $fullyQualifiedClassName
     ): void {
-        list($domainWords, $actionWords) = $this->extractDomainAndActionsFromRegexp(self::SERVICE_REGEXP, self::SERVICE_SPLIT_WORDS_REGEXP, $service);
+        list($domainWords, $actionWords) = $this->extractDomainAndActionsAndSubActionsFromRegexp(self::SERVICE_REGEXP, self::SERVICE_SPLIT_WORDS_REGEXP, $service);
         $actionWordsFromFQCN = $this->getWordsFromCamelCasedString($this->extractActionWithoutDomainFromFQCN($fullyQualifiedClassName));
         $domainWordsFromFQCN = $this->getWordsFromCamelCasedString($this->extractDomainFromFQCN($fullyQualifiedClassName));
 
@@ -211,12 +227,17 @@ class MCMCommandFormatsValidator
     }
 
     /**
-     * @return string domaine+action in CamelCase format `DomainAction`
+     * @return string domain+action in CamelCase format `DomainAction`
      */
     private function extractActionFromFQCN(string $fullyQualifiedClassName): string
     {
         return $this->getFQCNRegexpMatches($fullyQualifiedClassName)['action'] ?? '';
     }
+
+    /*private function extractSubActionFromFQCN(string $fullyQualifiedClassName): string
+    {
+        return (isset($this->getFQCNRegexpMatches($fullyQualifiedClassName)['subaction'])) ? $this->getFQCNRegexpMatches($fullyQualifiedClassName)['subaction'] : '';
+    }*/
 
     /**
      * @return string action in CamelCase format `Action`
@@ -230,6 +251,18 @@ class MCMCommandFormatsValidator
         );
     }
 
+    /*private function extractSubactionWithoutDomainFromFQCN(string $fullyQualifiedClassName): string
+    {
+        return str_replace(
+            [
+                $this->extractDomainFromFQCN($fullyQualifiedClassName),
+                $this->extractActionFromFQCN($fullyQualifiedClassName),
+            ],
+            '',
+            $this->extractSubActionFromFQCN($fullyQualifiedClassName)
+        );
+    }*/
+
     /**
      * @param string $fullyQualifiedClassName
      *
@@ -239,7 +272,7 @@ class MCMCommandFormatsValidator
     {
         preg_match(self::FQCN_REGEXP, $fullyQualifiedClassName, $matches);
 
-        return $matches ?? [];
+        return $matches ?: [];
     }
 
     /**
@@ -247,11 +280,11 @@ class MCMCommandFormatsValidator
      * @param string $splitWordsRegexp
      * @param string $subject
      *
-     * @return array{array<int, string>, array<int, string>}
+     * @return array{array<int, string>, array<int, string>, array<int, string>}
      *
      * @throws \Exception
      */
-    private function extractDomainAndActionsFromRegexp(string $regexp, string $splitWordsRegexp, string $subject): array
+    private function extractDomainAndActionsAndSubActionsFromRegexp(string $regexp, string $splitWordsRegexp, string $subject): array
     {
         preg_match($regexp, $subject, $matches);
         $domainWords = preg_split($splitWordsRegexp, $matches['domain'] ?? '');
@@ -267,6 +300,13 @@ class MCMCommandFormatsValidator
         }
         $actionWords = array_map('ucfirst', $actionWords);
 
-        return [$domainWords, $actionWords];
+        // subaction words : string split in words using `-` or `:` as separator then CamelCased
+        $subactionWords = preg_split($splitWordsRegexp, $matches['subaction'] ?? '');
+        if (false === $subactionWords) {
+            throw new Exception("failed to extract subaction words from '$subject'.");
+        }
+        $subactionWords = array_map('ucfirst', $subactionWords);
+
+        return [$domainWords, $actionWords, $subactionWords];
     }
 }

@@ -20,9 +20,9 @@ declare(strict_types=1);
 namespace MCM\Console\Tests\Validator;
 
 use ArrayIterator;
-use MCM\Console\Tests\Validator\Exception\CantValidateEmptyValidationResults;
 use Iterator;
 use IteratorAggregate;
+use MCM\Console\Tests\Validator\Exception\CantValidateEmptyValidationResults;
 
 /**
  * Class ValidationResults

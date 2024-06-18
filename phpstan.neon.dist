@@ -8,12 +8,9 @@ parameters:
     - tests/Resources/
   reportUnmatchedIgnoredErrors: true
   level: 5 # If changed, needs to be changed in grumphp.yml.dist too
-  stubFiles:
-    - .devtools/phpstan/stubs/Category.stub
-    - .devtools/phpstan/stubs/Product.stub
 
 includes:
   - %currentWorkingDirectory%/.devtools/.phpstan_bootstrap.neon
   - %currentWorkingDirectory%/phpstan_baseline.neon
   - %currentWorkingDirectory%/vendor/prestashop/php-dev-tools/phpstan/ps-module-extension.neon
-  - %currentWorkingDirectory%/.devtools/fop_names_rules.neon
+  - %currentWorkingDirectory%/.devtools/mcm_names_rules.neon

@@ -61,7 +61,7 @@ class PhpStanNamesConsistencyService
             throw new Exception('Service not found in service.yaml.' . PHP_EOL . 'Maybe unsupported syntax.' . PHP_EOL . 'Use this form :' . PHP_EOL . '' . PHP_EOL . ' mcm.console.domain.action.command:' . PHP_EOL . '   class: FOP\\Console\\Commands\\Domain\\DomainAction' . PHP_EOL . '   tags: [ console.command ]');
         }
 
-        return $services[$fullyQualifiedClassName] ?? '';
+        return $services[$fullyQualifiedClassName] ?: '';
     }
 
     /**

@@ -41,8 +41,8 @@ services:
         class: MCM\Console\Commands\About\AboutVersion
         tags: [ console.command ]
 
-    mcm.console.module.generate.debug.command:
-        class: MCM\Console\Commands\Module\ModuleGenerateDebugCommand
+    mcm.console.module.debug.command:
+        class: MCM\Console\Commands\Module\ModuleDebugCommand
         parent: mcm.console.module.generate.command
         public: true
         tags: [ console.command ]

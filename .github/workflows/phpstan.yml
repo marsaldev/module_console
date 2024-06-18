@@ -32,8 +32,8 @@ jobs:
           path: ${{ runner.temp }}/prestashop/
           key: ${{ runner.os }}-${{ matrix.presta-versions }}
 
-      - name: "Setup PHP"
-        uses: shivammathur/setup-php@v2
+      - name: Setup PHP Action
+        uses: shivammathur/setup-php@2.30.5
         with:
           php-version: '7.2'
 

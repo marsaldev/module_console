@@ -36,7 +36,7 @@ class MCMCommandFormatsValidatorTest extends TestCase
     {
         $this->assertInstanceOf(
             ValidationResults::class,
-            $this->validator->validate('fqcn', 'command:name', 'fop.service')
+            $this->validator->validate('fqcn', 'command:name', 'mcm.service')
         );
     }
 

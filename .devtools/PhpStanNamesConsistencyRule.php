@@ -48,7 +48,7 @@ class PhpStanNamesConsistencyRule implements Rule
     /** @var \PHPStan\Analyser\Scope */
     private $scope;
 
-    /** @var \FOP\Console\Tests\Validator\PhpStanNamesConsistencyService */
+    /** @var \MCM\Console\Tests\Validator\PhpStanNamesConsistencyService */
     private $validator;
 
     public function __construct(PhpStanNamesConsistencyService $validatorService)

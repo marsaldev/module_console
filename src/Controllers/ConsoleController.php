@@ -116,6 +116,6 @@ class ConsoleController extends Controller
     protected function buildContainer()
     {
         // @todo: Should we return the back office container here ?
-        return null;
+        return $this->get('container');
     }
 }
